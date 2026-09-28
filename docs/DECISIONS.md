@@ -14,3 +14,9 @@ Use the approved spacious visual direction and an optional orbit menu. Always re
 
 ## D005 — Documentation status
 Research PDF authoring was cancelled before content creation. Existing design PDFs/images remain local ignored reference artifacts. Preserve the user's technical PDF brief and create real code/test evidence first.
+
+## D006 — Discrete temperature evidence, not invented interpolation
+Primary-source recheck supplies broccoli values at 0/5/10/15/20 °C. Use those exact points and show a gap elsewhere. The interface must permit honest unknown/custom temperatures rather than forcing real shipments onto supported points. Phase P3 will expose reference-point shortcuts and plain explanations.
+
+## D007 — Rank families without invented objective data
+No trustworthy cost quotes, complete film transfer curves or local recycling inventory are available. The MVP orders appropriate material families by declared preference and exposes their tradeoffs. It does not claim constrained numerical optimization or a validated supplier match. Future supplier ingestion can replace this limited ordering; document this limit in P5 and the future PDF.

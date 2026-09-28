@@ -1,0 +1,285 @@
+{
+  "version": "2026.09.29.1",
+  "sources": [
+    {
+      "id": "UCD-BROCCOLI",
+      "title": "UC Davis · Broccoli produce facts",
+      "url": "https://postharvest.ucdavis.edu/produce-facts-sheets/broccoli",
+      "kind": "Commodity reference",
+      "note": "Whole-head respiration, mL CO2/kg/hour: 16–18 at 5 °C; 140–160 at 20 °C. Not measured on your batch.",
+      "accessed": "2026-09-29"
+    },
+    {
+      "id": "FAO-PACK",
+      "title": "FAO · Packaging and handling",
+      "url": "https://www.fao.org/4/y4358e/y4358e05.htm",
+      "kind": "Handling reference",
+      "note": "Mechanical protection, ventilation and handling principles; not a package certification.",
+      "accessed": "2026-09-29"
+    },
+    {
+      "id": "USDA-AH66",
+      "title": "USDA · Commercial storage handbook",
+      "url": "https://www.ars.usda.gov/is/np/CommercialStorage/CommercialStorage.pdf",
+      "kind": "Commodity reference",
+      "note": "Commodity, maturity and temperature all matter. Storage references do not certify a specific journey.",
+      "accessed": "2026-09-29"
+    },
+    {
+      "id": "JINDAL-18MM388",
+      "title": "Jindal · Metallyte 18MM388 datasheet",
+      "url": "https://jindalfilms.com/wp-content/uploads/jindal-products/productpdf/Metallyte_18MM388_177.pdf",
+      "kind": "Historical supplier sheet",
+      "note": "Revision 2013; typical substrate values. Confirm current grade, complete converted pack and pressure/test-method basis with supplier.",
+      "accessed": "2026-09-29"
+    },
+    {
+      "id": "FSSAI",
+      "title": "FSSAI · Packaging compendium and notices",
+      "url": "https://www.fssai.gov.in/notifications.php",
+      "kind": "Regulatory reference",
+      "note": "Obtain intended-use food-contact evidence and check current applicable notifications; this app does not certify compliance.",
+      "accessed": "2026-09-29"
+    },
+    {
+      "id": "RECYCLASS",
+      "title": "RecyClass · Design-for-recycling guidance",
+      "url": "https://recyclass.eu/protocols-guidelines/design-for-recycling-guidelines/packaging/",
+      "kind": "Design guidance",
+      "note": "Design guidance does not establish collection or recycling in the destination locality.",
+      "accessed": "2026-09-29"
+    },
+    {
+      "id": "MODEL",
+      "title": "Packora · Engineering assumptions and equations",
+      "url": "/methodology",
+      "kind": "Transparent model",
+      "note": "Steady-state mass balance and constant-flux budgets. Screening equations, not a validated shelf-life predictor.",
+      "accessed": "2026-09-29"
+    }
+  ],
+  "foods": [
+    {
+      "id": "tomato",
+      "name": "Tomatoes",
+      "subtitle": "Whole produce · bulk transport",
+      "category": "fresh",
+      "default_format": "bulk",
+      "source_ids": [
+        "USDA-AH66",
+        "FAO-PACK"
+      ],
+      "respiration": []
+    },
+    {
+      "id": "broccoli",
+      "name": "Broccoli",
+      "subtitle": "Whole heads · retail pack",
+      "category": "fresh",
+      "default_format": "retail",
+      "source_ids": [
+        "UCD-BROCCOLI"
+      ],
+      "respiration": [
+        {
+          "temperature_c": 0,
+          "low": 10,
+          "high": 11
+        },
+        {
+          "temperature_c": 5,
+          "low": 16,
+          "high": 18
+        },
+        {
+          "temperature_c": 10,
+          "low": 38,
+          "high": 43
+        },
+        {
+          "temperature_c": 15,
+          "low": 80,
+          "high": 90
+        },
+        {
+          "temperature_c": 20,
+          "low": 140,
+          "high": 160
+        }
+      ]
+    },
+    {
+      "id": "peanuts",
+      "name": "Roasted peanuts",
+      "subtitle": "Dry, fatty food · moisture & oxygen",
+      "category": "dry",
+      "default_format": "retail",
+      "source_ids": [
+        "MODEL"
+      ],
+      "respiration": []
+    },
+    {
+      "id": "chips",
+      "name": "Potato chips",
+      "subtitle": "Crisp snack · moisture & crush protection",
+      "category": "dry",
+      "default_format": "retail",
+      "source_ids": [
+        "MODEL"
+      ],
+      "respiration": []
+    }
+  ],
+  "materials": [
+    {
+      "id": "crate",
+      "name": "Ventilated reusable crate",
+      "family": "Rigid HDPE or PP crate",
+      "modes": [
+        "bulk"
+      ],
+      "benefit": "Supports the load while open vents allow airflow.",
+      "tradeoff": "Needs cleaning, suitable stacking and a practical return route.",
+      "seal": "No hermetic seal for this bulk-produce use",
+      "mechanical": "Check stacking load, vent alignment and drop resistance with supplier.",
+      "sustainability": "Reuse can reduce single-use material when crates are returned and cleaned.",
+      "source_ids": [
+        "FAO-PACK",
+        "RECYCLASS"
+      ],
+      "measurements": []
+    },
+    {
+      "id": "corrugated",
+      "name": "Vented corrugated produce box",
+      "family": "Corrugated board",
+      "modes": [
+        "bulk"
+      ],
+      "benefit": "Lightweight secondary protection with configurable dividers.",
+      "tradeoff": "Moisture and stacking can reduce performance; test the actual route.",
+      "seal": "Keep ventilation openings unobstructed",
+      "mechanical": "Specify tested compression strength at expected humidity.",
+      "sustainability": "Check local collection and coatings before calling it recyclable.",
+      "source_ids": [
+        "FAO-PACK",
+        "RECYCLASS"
+      ],
+      "measurements": []
+    },
+    {
+      "id": "breathable",
+      "name": "Breathable produce film",
+      "family": "Perforated PE or PP film + protective tray",
+      "modes": [
+        "fresh"
+      ],
+      "benefit": "A candidate route to balance respiration with gas exchange.",
+      "tradeoff": "Perforation design must be matched to pack geometry and use temperature.",
+      "seal": "Verify final pack leakage, seals and perforation consistency",
+      "mechanical": "Check puncture resistance and protect heads from compression.",
+      "sustainability": "Simpler compatible materials may help sorting; confirm local acceptance.",
+      "source_ids": [
+        "UCD-BROCCOLI",
+        "MODEL",
+        "RECYCLASS"
+      ],
+      "measurements": []
+    },
+    {
+      "id": "vented-produce",
+      "name": "Vented tray or produce bag",
+      "family": "Open-vent produce package",
+      "modes": [
+        "fresh"
+      ],
+      "benefit": "Allows air exchange without deliberately establishing low oxygen.",
+      "tradeoff": "Moisture loss and handling protection still need assessment.",
+      "seal": "Vented, not a claimed MAP seal",
+      "mechanical": "Select a tray or outer crate suitable for transport loads.",
+      "sustainability": "Consider a reusable outer crate and minimal food-contact material.",
+      "source_ids": [
+        "FAO-PACK",
+        "MODEL"
+      ],
+      "measurements": []
+    },
+    {
+      "id": "metallized",
+      "name": "Metallized barrier pouch",
+      "family": "Metallized film + verified sealant layer",
+      "modes": [
+        "dry"
+      ],
+      "benefit": "A candidate structure for light, moisture and oxygen protection.",
+      "tradeoff": "The substrate sheet does not describe the finished pouch or its seals.",
+      "seal": "Require a compatible food-contact sealant and validated seal window",
+      "mechanical": "Check flex cracking, pinholes and transport puncture resistance.",
+      "sustainability": "Metal coating, adhesives and sealant affect sorting and recycling.",
+      "source_ids": [
+        "JINDAL-18MM388",
+        "MODEL",
+        "RECYCLASS"
+      ],
+      "measurements": [
+        {
+          "property": "OTR",
+          "value": 26,
+          "unit": "mL/m²/day",
+          "temperature_c": 23,
+          "rh_percent": 0,
+          "pressure_difference_atm": null,
+          "thickness_um": 18,
+          "note": "Historical typical substrate value; delta-pressure basis not established here."
+        },
+        {
+          "property": "WVTR",
+          "value": 0.2,
+          "unit": "g/m²/day",
+          "temperature_c": 38,
+          "rh_percent": 90,
+          "pressure_difference_atm": null,
+          "thickness_um": 18,
+          "note": "Historical substrate value; supplier method/scaling footnotes apply, not automatically comparable to your conditions."
+        }
+      ]
+    },
+    {
+      "id": "mono-pe",
+      "name": "Barrier mono-PE candidate",
+      "family": "PE-based barrier structure",
+      "modes": [
+        "dry"
+      ],
+      "benefit": "Explore a simpler material stream with the converter.",
+      "tradeoff": "Barrier coating, thickness and oxygen performance must be measured.",
+      "seal": "Ask for the seal-temperature window and contaminated-seal tests",
+      "mechanical": "Check puncture, stiffness and required outer protection.",
+      "sustainability": "Potential design-for-recycling benefit only if the full structure and local system support it.",
+      "source_ids": [
+        "RECYCLASS",
+        "MODEL"
+      ],
+      "measurements": []
+    },
+    {
+      "id": "foil",
+      "name": "Aluminium-foil laminate",
+      "family": "Foil barrier + structural and sealant layers",
+      "modes": [
+        "dry"
+      ],
+      "benefit": "A candidate when a demanding barrier target justifies a complex structure.",
+      "tradeoff": "Seals and flex-induced pinholes can dominate pack performance.",
+      "seal": "Require converter validation of the complete food-contact laminate",
+      "mechanical": "Test flex cracking, puncture and filled-pack drop performance.",
+      "sustainability": "Multiple bonded materials can complicate recovery; avoid unnecessary overpackaging.",
+      "source_ids": [
+        "MODEL",
+        "RECYCLASS"
+      ],
+      "measurements": []
+    }
+  ]
+}
