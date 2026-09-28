@@ -1,0 +1,38 @@
+# Dependencies and environments
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+# Build, coverage, and browser artifacts
+dist/
+build/
+coverage/
+htmlcov/
+.coverage
+playwright-report/
+test-results/
+*.tsbuildinfo
+# Local research/design exports and working files
+tmp/
+output/
+artifacts/
+*.log
+*.pid
+# Credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.codex/
+.agents/
