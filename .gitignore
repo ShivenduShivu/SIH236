@@ -1,5 +1,7 @@
 # Dependencies and environments
 node_modules/
+.pnpm-store/
+.pnpm/
 .venv/
 venv/
 __pycache__/

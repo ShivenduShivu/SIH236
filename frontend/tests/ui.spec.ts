@@ -1,53 +1,91 @@
 import { test, expect } from '@playwright/test'
 
-test('workspace is readable, opens navigation and stays within viewport', async ({page}, info) => {
-  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
+test('workspace is readable, opens navigation and stays within viewport', async ({
+  page,
+}, info) => {
+  const errors: string[] = []
+  page.on('pageerror', (e) => errors.push(e.message))
   await page.goto('/')
-  await expect(page.getByRole('heading',{name:/Your harvest/})).toBeVisible()
-  await page.screenshot({path:`../tmp/screenshots/${info.project.name}-workspace.png`,fullPage:true})
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy()
-  if(info.project.name==='desktop') await page.getByRole('button',{name:'Open navigation menu'}).click()
-  else await page.getByRole('button',{name:'More navigation'}).click()
+  await expect(page.getByRole('heading', { name: /Your harvest/ })).toBeVisible()
+  await page.screenshot({
+    path: `../tmp/screenshots/${info.project.name}-workspace.png`,
+    fullPage: true,
+  })
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
+  if (info.project.name === 'desktop')
+    await page.getByRole('button', { name: 'Open navigation menu' }).click()
+  else await page.getByRole('button', { name: 'More navigation' }).click()
   await expect(page.getByRole('dialog')).toBeVisible()
-  await page.screenshot({path:`../tmp/screenshots/${info.project.name}-orbit.png`,fullPage:true})
-  await page.getByRole('button',{name:'List view'}).click()
-  await expect(page.getByRole('dialog').getByRole('button',{name:'Evidence',exact:true})).toBeVisible()
-  await page.getByRole('button',{name:'Close navigation'}).click()
+  await page.screenshot({
+    path: `../tmp/screenshots/${info.project.name}-orbit.png`,
+    fullPage: true,
+  })
+  await page.getByRole('button', { name: 'List view' }).click()
+  await expect(
+    page.getByRole('dialog').getByRole('button', { name: 'Evidence', exact: true }),
+  ).toBeVisible()
+  await page.getByRole('button', { name: 'Close navigation' }).click()
   await expect(page.getByRole('dialog')).not.toBeVisible()
   expect(errors).toEqual([])
 })
 
-test('broccoli journey produces correct live result and temperature sensitivity', async ({page},info) => {
+test('broccoli journey produces correct live result and temperature sensitivity', async ({
+  page,
+}, info) => {
   await page.goto('/')
-  await page.getByRole('button',{name:/Broccoli, kept cool/}).click()
-  await expect(page.getByRole('heading',{name:'What are you packing?'})).toBeVisible()
-  await page.getByRole('button',{name:'Continue',exact:true}).click()
+  await page.getByRole('button', { name: /Broccoli, kept cool/ }).click()
+  await expect(page.getByRole('heading', { name: 'What are you packing?' })).toBeVisible()
+  await page.getByRole('button', { name: 'Continue', exact: true }).click()
   await expect(page.getByLabel('On the road duration')).toHaveValue('12')
-  await page.screenshot({path:`../tmp/screenshots/${info.project.name}-journey.png`,fullPage:true})
-  await page.getByRole('button',{name:'Continue',exact:true}).click()
-  await page.getByRole('button',{name:'Build my packaging plan'}).click()
-  await expect(page.getByRole('heading',{name:'Breathable produce film',exact:true}).first()).toBeVisible()
-  await expect(page.getByText('20,000–22,500',{exact:true})).toBeVisible()
-  await page.screenshot({path:`../tmp/screenshots/${info.project.name}-result.png`,fullPage:true})
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy()
-  await page.getByRole('button',{name:'Travel at 20 °C'}).click()
-  await expect(page.getByRole('heading',{name:'Vented tray or produce bag',exact:true}).first()).toBeVisible()
-  await expect(page.getByText('1,75,000–2,00,000',{exact:true})).toBeVisible()
-  await expect(page.getByText('Compared with your previous run',{exact:true})).toBeVisible()
-  await page.getByRole('tab',{name:'Calculations'}).click()
-  await expect(page.getByRole('heading',{name:'Gas demand across the journey'})).toBeVisible()
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy()
-  await page.screenshot({path:`../tmp/screenshots/${info.project.name}-calculations.png`,fullPage:true})
+  await page.screenshot({
+    path: `../tmp/screenshots/${info.project.name}-journey.png`,
+    fullPage: true,
+  })
+  await page.getByRole('button', { name: 'Continue', exact: true }).click()
+  await page.getByRole('button', { name: 'Build my packaging plan' }).click()
+  await expect(
+    page.getByRole('heading', { name: 'Breathable produce film', exact: true }).first(),
+  ).toBeVisible()
+  await expect(page.getByText('20,000–22,500', { exact: true })).toBeVisible()
+  await page.screenshot({
+    path: `../tmp/screenshots/${info.project.name}-result.png`,
+    fullPage: true,
+  })
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
+  await page.getByRole('button', { name: 'Travel at 20 °C' }).click()
+  await expect(
+    page.getByRole('heading', { name: 'Vented tray or produce bag', exact: true }).first(),
+  ).toBeVisible()
+  await expect(page.getByText('1,75,000–2,00,000', { exact: true })).toBeVisible()
+  await expect(page.getByText('Compared with your previous run', { exact: true })).toBeVisible()
+  await page.getByRole('tab', { name: 'Calculations' }).click()
+  await expect(page.getByRole('heading', { name: 'Gas demand across the journey' })).toBeVisible()
+  await page.getByRole('tab', { name: 'Calculations' }).focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByRole('tab', { name: 'Evidence & limits' })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  )
+  await page.keyboard.press('ArrowLeft')
+  await expect(page.getByRole('tab', { name: 'Calculations' })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  )
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
+  await page.screenshot({
+    path: `../tmp/screenshots/${info.project.name}-calculations.png`,
+    fullPage: true,
+  })
 })
 
-test('keyboard can open and dismiss the menu', async ({page},info) => {
-  test.skip(info.project.name==='mobile','Desktop keyboard check')
+test('keyboard can open and dismiss the menu', async ({ page }, info) => {
+  test.skip(info.project.name === 'mobile', 'Desktop keyboard check')
   await page.goto('/')
-  await expect(page.getByRole('heading',{name:/Your harvest/})).toBeVisible()
-  await page.getByRole('button',{name:'Open navigation menu'}).focus()
+  await expect(page.getByRole('heading', { name: /Your harvest/ })).toBeVisible()
+  await page.getByRole('button', { name: 'Open navigation menu' }).focus()
   await page.keyboard.press('Enter')
   await expect(page.getByRole('dialog')).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).not.toBeVisible()
-  await expect(page.getByRole('button',{name:'Open navigation menu'})).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Open navigation menu' })).toBeFocused()
 })

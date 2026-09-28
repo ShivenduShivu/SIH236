@@ -1,16 +1,316 @@
 import { useState } from 'react'
-import { ArrowRight, BookOpen, ChevronDown, Clock3, Code2, Layers3, Leaf, Search, Trash2 } from 'lucide-react'
+import {
+  ArrowRight,
+  BookOpen,
+  ChevronDown,
+  Clock3,
+  Code2,
+  Layers3,
+  Leaf,
+  Search,
+  Trash2,
+} from 'lucide-react'
 import type { Catalog, Saved } from './types'
 import { MaterialDetail, Sources, statusLabel } from './Results'
 
-export function Materials({catalog}: {catalog:Catalog}) {
-  const [filter,setFilter]=useState('all'),[query,setQuery]=useState('')
-  const materials=catalog.materials.filter(m=>(filter==='all'||m.modes.includes(filter))&&`${m.name} ${m.family}`.toLowerCase().includes(query.toLowerCase()))
-  return <main className="page library-page" id="main-content"><div className="section-heading"><span className="eyebrow">A SMALL, TRACEABLE MATERIAL LIBRARY</span><h1>Understand the tradeoffs.</h1><p>Seven candidate families, with their roles and the measurements still needed. No generic resin name stands in for a verified package.</p></div><div className="library-toolbar"><div className="filter-pills">{[['all','All materials'],['bulk','Bulk transport'],['fresh','Fresh retail'],['dry','Dry foods']].map(([id,label])=><button key={id} className={filter===id?'active':''} onClick={()=>setFilter(id)}>{label}</button>)}</div><label className="search-field"><Search size={18}/><input aria-label="Search materials" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Find a material"/></label></div><div className="materials-grid">{materials.map(m=><details key={m.id} className="library-material"><summary><div className="material-symbol"><Layers3 size={30}/></div><span className="eyebrow">{m.modes.join(' / ')} APPLICATION</span><h2>{m.name}</h2><p>{m.family}</p><span className="material-open">Explore structure<ChevronDown size={17}/></span></summary><MaterialDetail material={m}/><small className="source-code">Source IDs: {m.source_ids.join(', ')}</small></details>)}</div>{!materials.length&&<div className="empty-state"><Search/><h2>No material found.</h2><p>Try a broader name or a different application.</p><button className="button secondary" onClick={()=>{setQuery('');setFilter('all')}}>Clear filters</button></div>}<div className="inline-note"><Leaf size={22}/><p>Recyclability depends on the complete structure and the local collection system. Biodegradable does not automatically mean a better barrier, compostability everywhere, or lower overall impact.</p></div></main>
+export function Materials({ catalog }: { catalog: Catalog }) {
+  const [filter, setFilter] = useState('all'),
+    [query, setQuery] = useState('')
+  const materials = catalog.materials.filter(
+    (m) =>
+      (filter === 'all' || m.modes.includes(filter)) &&
+      `${m.name} ${m.family}`.toLowerCase().includes(query.toLowerCase()),
+  )
+  return (
+    <main className="page library-page" id="main-content">
+      <div className="section-heading">
+        <span className="eyebrow">A SMALL, TRACEABLE MATERIAL LIBRARY</span>
+        <h1>Understand the tradeoffs.</h1>
+        <p>
+          Seven candidate families, with their roles and the measurements still needed. No generic
+          resin name stands in for a verified package.
+        </p>
+      </div>
+      <div className="library-toolbar">
+        <div className="filter-pills">
+          {[
+            ['all', 'All materials'],
+            ['bulk', 'Bulk transport'],
+            ['fresh', 'Fresh retail'],
+            ['dry', 'Dry foods'],
+          ].map(([id, label]) => (
+            <button
+              key={id}
+              className={filter === id ? 'active' : ''}
+              onClick={() => setFilter(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <label className="search-field">
+          <Search size={18} />
+          <input
+            aria-label="Search materials"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Find a material"
+          />
+        </label>
+      </div>
+      <div className="materials-grid">
+        {materials.map((m) => (
+          <details key={m.id} className="library-material">
+            <summary>
+              <div className="material-symbol">
+                <Layers3 size={30} />
+              </div>
+              <span className="eyebrow">{m.modes.join(' / ')} APPLICATION</span>
+              <h2>{m.name}</h2>
+              <p>{m.family}</p>
+              <span className="material-open">
+                Explore structure
+                <ChevronDown size={17} />
+              </span>
+            </summary>
+            <MaterialDetail material={m} />
+            <small className="source-code">Source IDs: {m.source_ids.join(', ')}</small>
+          </details>
+        ))}
+      </div>
+      {!materials.length && (
+        <div className="empty-state">
+          <Search />
+          <h2>No material found.</h2>
+          <p>Try a broader name or a different application.</p>
+          <button
+            className="button secondary"
+            onClick={() => {
+              setQuery('')
+              setFilter('all')
+            }}
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
+      <div className="inline-note">
+        <Leaf size={22} />
+        <p>
+          Recyclability depends on the complete structure and the local collection system.
+          Biodegradable does not automatically mean a better barrier, compostability everywhere, or
+          lower overall impact.
+        </p>
+      </div>
+    </main>
+  )
 }
 
-export function Evidence({catalog,onMethod}: {catalog:Catalog;onMethod:()=>void}) {return <main className="page evidence-page" id="main-content"><div className="section-heading"><span className="eyebrow">OPEN THE REASONING</span><h1>Evidence before confidence.</h1><p>Each source has a defined role. We keep measured values, reference ranges, calculations and assumptions separate.</p></div><div className="evidence-intro"><BookOpen size={28}/><div><h3>Built for inspection, not blind trust.</h3><p>Four commodity entries and seven material families keep this prototype's scope visible. Public access to a resource does not imply permission for unrestricted commercial reuse.</p></div><button className="text-button" onClick={onMethod}>Read the method<ArrowRight size={18}/></button></div><Sources sources={catalog.sources} onMethod={onMethod}/></main>}
+export function Evidence({ catalog, onMethod }: { catalog: Catalog; onMethod: () => void }) {
+  return (
+    <main className="page evidence-page" id="main-content">
+      <div className="section-heading">
+        <span className="eyebrow">OPEN THE REASONING</span>
+        <h1>Evidence before confidence.</h1>
+        <p>
+          Each source has a defined role. We keep measured values, reference ranges, calculations
+          and assumptions separate.
+        </p>
+      </div>
+      <div className="evidence-intro">
+        <BookOpen size={28} />
+        <div>
+          <h3>Built for inspection, not blind trust.</h3>
+          <p>
+            Four commodity entries and seven material families keep this prototype's scope visible.
+            Public access to a resource does not imply permission for unrestricted commercial reuse.
+          </p>
+        </div>
+        <button className="text-button" onClick={onMethod}>
+          Read the method
+          <ArrowRight size={18} />
+        </button>
+      </div>
+      <Sources sources={catalog.sources} onMethod={onMethod} />
+    </main>
+  )
+}
 
-export function Methodology() {return <main className="page method-page" id="main-content"><div className="section-heading"><span className="eyebrow">HOW PACKORA THINKS</span><h1>A model you can question.</h1><p>The useful part is the link between evidence, a physical requirement, and a practical next decision.</p></div><div className="method-flow">{[['01','Describe the food','Whole or cut? Bulk or retail? We separate total shipment weight from mass in one pack.'],['02','Build the journey','Preparation, travel and destination time are counted once. Temperature and humidity belong to each stage.'],['03','Calculate the requirement','A deterministic model uses cited reference ranges and explicitly supplied budgets. Unknowns stay unknown.'],['04','Compare and verify','Choose a candidate material direction, inspect tradeoffs, and carry the missing supplier and product checks forward.']].map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div><section className="method-section"><h2>Fresh produce keeps respiring.</h2><p>For whole broccoli at a supported reference temperature, CO2 production is 24 × mass per pack × respiration rate. The O2 demand follows the declared respiratory quotient. Required film permeance comes from balancing that demand with gas flow across the exposed area and pressure difference.</p><code>O2 permeance = CO2 per day / RQ / film area / O2 pressure difference</code><p>The simple model assumes a constant respiration rate and steady state. It does not predict how fast a pack reaches equilibrium, low-oxygen safety, microbial growth or shelf life. Targets are assumptions to investigate, not gas-flushing instructions.</p></section><section className="method-section"><h2>A dry food has a different question.</h2><p>If product trials tell you the acceptable water gain, divide it by exposed area and the full planning duration to obtain a WVTR budget. An oxygen budget also subtracts the oxygen already in the pack. Without those tolerances, the honest answer is a request for test data.</p><code>Maximum WVTR = allowable water gain / film area / total days</code><p>The snack example uses illustrative tolerances. Constant-flux budgets need matching test/use conditions and allowances for seals and leaks before commercial specification.</p></section><section className="method-section"><h2>Where is the AI?</h2><p>This build uses a knowledge-based decision engine with explicit rules and engineering calculations. It does not use a trained shelf-life model or an LLM to invent packaging properties. Browser speech and limited phrase extraction reduce typing; you confirm the fields. Photos are a visual input aid, with manual commodity confirmation.</p><p>An optional future language or vision model can help with extraction and explanation, but cannot replace source provenance, unit checks, constraints or laboratory evidence. The current engine works without an AI key.</p></section><section className="method-section"><h2>Useful limits are part of the answer.</h2><p>Material ordering reflects a declared design preference, not verified prices or a life-cycle optimum. A measured substrate OTR does not establish the performance of a finished pouch. Thickness, sealing, mechanical strength, food-contact suitability and local material recovery still need supplier and field evidence.</p><p>Saved plans stay in this browser. Export a plan to keep a portable copy. No accounts, cloud database, tracking service or deployment are used by this local prototype.</p></section></main>}
+export function Methodology() {
+  return (
+    <main className="page method-page" id="main-content">
+      <div className="section-heading">
+        <span className="eyebrow">HOW PACKORA THINKS</span>
+        <h1>A model you can question.</h1>
+        <p>
+          The useful part is the link between evidence, a physical requirement, and a practical next
+          decision.
+        </p>
+      </div>
+      <div className="method-flow">
+        {[
+          [
+            '01',
+            'Describe the food',
+            'Whole or cut? Bulk or retail? We separate total shipment weight from mass in one pack.',
+          ],
+          [
+            '02',
+            'Build the journey',
+            'Preparation, travel and destination time are counted once. Temperature and humidity belong to each stage.',
+          ],
+          [
+            '03',
+            'Calculate the requirement',
+            'A deterministic model uses cited reference ranges and explicitly supplied budgets. Unknowns stay unknown.',
+          ],
+          [
+            '04',
+            'Compare and verify',
+            'Choose a candidate material direction, inspect tradeoffs, and carry the missing supplier and product checks forward.',
+          ],
+        ].map(([n, t, d]) => (
+          <article key={n}>
+            <span>{n}</span>
+            <h3>{t}</h3>
+            <p>{d}</p>
+          </article>
+        ))}
+      </div>
+      <section className="method-section">
+        <h2>Fresh produce keeps respiring.</h2>
+        <p>
+          For whole broccoli at a supported reference temperature, CO2 production is 24 × mass per
+          pack × respiration rate. The O2 demand follows the declared respiratory quotient. Required
+          film permeance comes from balancing that demand with gas flow across the exposed area and
+          pressure difference.
+        </p>
+        <code>O2 permeance = CO2 per day / RQ / film area / O2 pressure difference</code>
+        <p>
+          The simple model assumes a constant respiration rate and steady state. It does not predict
+          how fast a pack reaches equilibrium, low-oxygen safety, microbial growth or shelf life.
+          Targets are assumptions to investigate, not gas-flushing instructions.
+        </p>
+      </section>
+      <section className="method-section">
+        <h2>A dry food has a different question.</h2>
+        <p>
+          If product trials tell you the acceptable water gain, divide it by exposed area and the
+          full planning duration to obtain a WVTR budget. An oxygen budget also subtracts the oxygen
+          already in the pack. Without those tolerances, the honest answer is a request for test
+          data.
+        </p>
+        <code>Maximum WVTR = allowable water gain / film area / total days</code>
+        <p>
+          The snack example uses illustrative tolerances. Constant-flux budgets need matching
+          test/use conditions and allowances for seals and leaks before commercial specification.
+        </p>
+      </section>
+      <section className="method-section">
+        <h2>Where is the AI?</h2>
+        <p>
+          This build uses a knowledge-based decision engine with explicit rules and engineering
+          calculations. It does not use a trained shelf-life model or an LLM to invent packaging
+          properties. Browser speech and limited phrase extraction reduce typing; you confirm the
+          fields. Photos are a visual input aid, with manual commodity confirmation.
+        </p>
+        <p>
+          An optional future language or vision model can help with extraction and explanation, but
+          cannot replace source provenance, unit checks, constraints or laboratory evidence. The
+          current engine works without an AI key.
+        </p>
+      </section>
+      <section className="method-section">
+        <h2>Useful limits are part of the answer.</h2>
+        <p>
+          Material ordering reflects a declared design preference, not verified prices or a
+          life-cycle optimum. A measured substrate OTR does not establish the performance of a
+          finished pouch. Thickness, sealing, mechanical strength, food-contact suitability and
+          local material recovery still need supplier and field evidence.
+        </p>
+        <p>
+          Saved plans stay in this browser. Export a plan to keep a portable copy. No accounts,
+          cloud database, tracking service or deployment are used by this local prototype.
+        </p>
+      </section>
+    </main>
+  )
+}
 
-export function SavedPlans({plans,onOpen,onDelete,onStart,onImport}: {plans:Saved[];onOpen:(p:Saved)=>void;onDelete:(id:string)=>void;onStart:()=>void;onImport:()=>void}) {return <main className="page saved-page" id="main-content"><div className="section-heading"><span className="eyebrow">YOUR WORK, READY TO PICK UP</span><h1>Keep a good plan close.</h1><p>Saved only in this browser. Export a JSON copy to move your plan to another device.</p></div><div className="section-bar"><h2>{plans.length} saved {plans.length===1?'plan':'plans'}</h2><button className="text-button" onClick={onImport}><Code2 size={17}/>Import a plan</button></div>{plans.length?<div className="saved-list">{plans.map(p=><article key={p.id}><button className="saved-main" onClick={()=>onOpen(p)}><div className={`saved-icon ${p.result.scenario.commodity}`}><Leaf size={25}/></div><div><h3>{p.result.scenario.title}</h3><p>{p.result.scenario.shipment_kg} kg · {p.result.journey_hours} hours · {statusLabel[p.result.status]}</p><small><Clock3 size={13}/> {new Date(p.savedAt).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})}</small></div><ArrowRight size={20}/></button><button className="icon-button danger" aria-label={`Delete ${p.result.scenario.title}`} onClick={()=>onDelete(p.id)}><Trash2 size={18}/></button></article>)}</div>:<div className="empty-state"><Leaf size={35}/><h2>There is room for your first journey.</h2><p>Build a packaging plan, then save it from the result page.</p><button className="button primary" onClick={onStart}>Start a new plan<ArrowRight size={18}/></button></div>}</main>}
+export function SavedPlans({
+  plans,
+  onOpen,
+  onDelete,
+  onStart,
+  onImport,
+}: {
+  plans: Saved[]
+  onOpen: (p: Saved) => void
+  onDelete: (id: string) => void
+  onStart: () => void
+  onImport: () => void
+}) {
+  return (
+    <main className="page saved-page" id="main-content">
+      <div className="section-heading">
+        <span className="eyebrow">YOUR WORK, READY TO PICK UP</span>
+        <h1>Keep a good plan close.</h1>
+        <p>Saved only in this browser. Export a JSON copy to move your plan to another device.</p>
+      </div>
+      <div className="section-bar">
+        <h2>
+          {plans.length} saved {plans.length === 1 ? 'plan' : 'plans'}
+        </h2>
+        <button className="text-button" onClick={onImport}>
+          <Code2 size={17} />
+          Import a plan
+        </button>
+      </div>
+      {plans.length ? (
+        <div className="saved-list">
+          {plans.map((p) => (
+            <article key={p.id}>
+              <button className="saved-main" onClick={() => onOpen(p)}>
+                <div className={`saved-icon ${p.result.scenario.commodity}`}>
+                  <Leaf size={25} />
+                </div>
+                <div>
+                  <h3>{p.result.scenario.title}</h3>
+                  <p>
+                    {p.result.scenario.shipment_kg} kg · {p.result.journey_hours} hours ·{' '}
+                    {statusLabel[p.result.status]}
+                  </p>
+                  <small>
+                    <Clock3 size={13} />{' '}
+                    {new Date(p.savedAt).toLocaleString('en-IN', {
+                      dateStyle: 'medium',
+                      timeStyle: 'short',
+                    })}
+                  </small>
+                </div>
+                <ArrowRight size={20} />
+              </button>
+              <button
+                className="icon-button danger"
+                aria-label={`Delete ${p.result.scenario.title}`}
+                onClick={() => onDelete(p.id)}
+              >
+                <Trash2 size={18} />
+              </button>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">
+          <Leaf size={35} />
+          <h2>There is room for your first journey.</h2>
+          <p>Build a packaging plan, then save it from the result page.</p>
+          <button className="button primary" onClick={onStart}>
+            Start a new plan
+            <ArrowRight size={18} />
+          </button>
+        </div>
+      )}
+    </main>
+  )
+}

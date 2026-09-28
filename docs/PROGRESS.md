@@ -1,7 +1,7 @@
 # Phase progress and evidence
 
 ## Current state
-P0 pushed (`a985c4a`); P1 pushed (`1db7774`); P2 pushed (`ff648a8`); P3 pushed (`c2a1023`). P4 integrated flows verified; P5 final review next. No food-packaging trials or deployment.
+P0 pushed (`a985c4a`); P1 pushed (`1db7774`); P2 pushed (`ff648a8`); P3 pushed (`c2a1023`); P4 pushed (`c15a5c2`). P5 release verification complete; this record is included in the final phase commit. The local prototype is complete for user review. No food-packaging trials or deployment.
 
 ## P0 — repository foundation
 - Inspected workspace: only local `output/` and `tmp/` design artifacts; no existing Git repository or application to overwrite.
@@ -42,3 +42,16 @@ P0 pushed (`a985c4a`); P1 pushed (`1db7774`); P2 pushed (`ff648a8`); P3 pushed (
 - Verification: backend **42 passed**; browser suite **29 passed, 1 intentionally skipped** across desktop and mobile. Cases cover all three flows, changed journey budgets, exhausted oxygen, manual unknowns, reviewed Hindi extraction, valid/invalid imports, deterministic JSON round trip, save/reload/delete, printable report, service failure/retry and stale-response protection.
 - Successfully executed `scripts/start.ps1 -Build`; it built the app and detected the existing local service without starting a duplicate. Rendered report inspected in print media; downloaded files and screenshots retained only in ignored `tmp/`.
 - Runtime note: test runner emits a dependency deprecation notice recommending httpx2. It does not affect the 42 passing API/engine tests; it is tracked for dependency maintenance rather than suppressed.
+
+## P5 — release review and handoff
+- Reformatted the Python/TypeScript/CSS source for maintainability, added checked formatter/linter configuration, and bundled third-party font/runtime-library notices. Fonts are served locally; unused font subsets were removed from the build.
+- Accessibility checks found real low-contrast text on the original pale surfaces. Darkened labels/notes while retaining the design. Final Axe checks on workspace, orbit, planner and results passed on desktop and mobile with **no serious/critical findings** under the selected WCAG tags. Added arrow-key result tabs and retained keyboard/Escape/list alternatives.
+- Hardened saved snapshots against malformed data, tested unavailable browser storage, explicit photo confirmation and no-speech fallback, and verified a 320 px reduced-motion viewport.
+- Bumped the engine to **1.0.1** after the reviewed behavior fixes. Report export now rejects an old fingerprint rather than silently recomputing a saved snapshot under new versions.
+- Final backend verification: **43 passed**; Ruff lint and format checks passed; `pip check` passed. The visible test-client deprecation notice remains documented.
+- Full browser release suite: **42 passed, 2 intentionally skipped**. Skips are mobile duplicates of desktop keyboard-menu and additional 320 px/reduced-motion checks. A subsequent tightening of snapshot guards passed all **6 affected storage/persistence browser checks** on the final rebuilt app.
+- Strict TypeScript check and production build passed. Final bundle approximately **295 KB JS / 93 KB gzip**, with locally served fonts. Frontend production dependency advisory audit: **no known vulnerabilities found** at the time checked. This does not claim a complete backend security audit.
+- Windows start/build, existing-server detection and narrowly verified stop/restart helper exercised successfully. Health endpoint reports engine 1.0.1 at `http://127.0.0.1:8000`; background process remains local for review. Third-party notices return HTTP 200 from the built app.
+- Latest desktop/mobile screenshots and print-report layout reviewed; artifacts remain ignored. Added architecture, exact limitations, reproducible verification commands and a four-minute demo guide. Technical PDF is still deferred and its brief preserved.
+- Final repository review found a generated `.pnpm-store/` from an earlier sandboxed dependency command. Added both `.pnpm-store/` and `.pnpm/` to ignore/audit rules; no cache content was committed. Rechecked ignore behavior for credentials, dependencies, builds, screenshots and old design PDFs.
+- The final phase commit includes this release record. Git history identifies its revision; remote alignment is verified after the push before handoff. No force push or deployment.
