@@ -26,3 +26,6 @@ No LLM/vision credentials were provided. The complete workflow uses an ordinary 
 
 ## D009 — Integration verification through the real local build
 Build React into `frontend/dist` and serve it with FastAPI on 127.0.0.1:8000. Browser tests use the installed headless Edge channel on this machine; generic instructions will support Playwright Chromium on other machines. Generated screenshots/traces stay outside Git. A production deployment is still explicitly unauthorized.
+
+## D010 — Response ownership belongs to the current editor revision
+Every scenario edit or navigation invalidates pending evaluations. Editing from a what-if result also invalidates its request before opening the editor. A delayed old response must not overwrite the new draft. The integration suite now exercises that actual race with a deliberately held network response.

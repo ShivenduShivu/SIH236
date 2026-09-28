@@ -41,6 +41,11 @@ def test_malformed_wrong_media_and_oversized():
     assert client.post('/api/evaluate', content=' ' * 65537, headers={'Content-Type': 'application/json'}).status_code == 413
 
 
+def test_pathologically_nested_json_is_rejected():
+    # Python runtimes differ in parser depth limits: reject either at parsing or schema validation.
+    assert client.post('/api/evaluate', content='[' * 2000 + '0' + ']' * 2000, headers={'Content-Type': 'application/json'}).status_code in (400, 422)
+
+
 def test_chunked_limit():
     def chunks():
         for _ in range(10):

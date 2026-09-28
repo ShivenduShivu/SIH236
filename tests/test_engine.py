@@ -80,6 +80,7 @@ def test_missing_geometry_returns_data_gap_not_number():
     r = evaluate(scenario(area_m2=None))
     assert r['status'] == 'needs_data'
     assert not r['calculations']
+    assert not any(i['code'].startswith('temperature_reference_') for i in r['issues'])
 
 
 def test_no_interpolation_or_extrapolation_without_evidence():

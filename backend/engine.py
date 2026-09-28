@@ -68,7 +68,7 @@ def evaluate(s: Scenario) -> dict:
                 entry['o2_permeance'] = range_value(lo / s.rq / o2den, hi / s.rq / o2den, 'mL/m²/day/atm')
                 entry['co2_permeance'] = range_value(lo / co2den, hi / co2den, 'mL/m²/day/atm')
                 entry['basis'] = 'UCD-BROCCOLI; reference interval at the stated temperature'
-            elif st.temperature_c is not None and food.respiration and s.condition == 'whole':
+            elif ref is None and st.temperature_c is not None and food.respiration and s.condition == 'whole':
                 issue('temperature_reference_' + st.name, 'needs_data', f'No curated respiration value at {st.temperature_c:g} °C for {st.name}.', 'The reference has values at 0, 5, 10, 15 and 20 °C. Obtain data at the actual temperature; do not change real conditions just to fit the model.')
             stage_results.append(entry)
         valid = [e for e in stage_results if e['demand']]

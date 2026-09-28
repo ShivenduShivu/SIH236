@@ -1,7 +1,7 @@
 # Phase progress and evidence
 
 ## Current state
-P0 pushed (`a985c4a`); P1 pushed (`1db7774`); P2 pushed (`ff648a8`). P3 interface verified; P4 integration hardening next. No food-packaging trials or deployment.
+P0 pushed (`a985c4a`); P1 pushed (`1db7774`); P2 pushed (`ff648a8`); P3 pushed (`c2a1023`). P4 integrated flows verified; P5 final review next. No food-packaging trials or deployment.
 
 ## P0 — repository foundation
 - Inspected workspace: only local `output/` and `tmp/` design artifacts; no existing Git repository or application to overwrite.
@@ -34,3 +34,11 @@ P0 pushed (`a985c4a`); P1 pushed (`1db7774`); P2 pushed (`ff648a8`). P3 interfac
 - Playwright against the actual FastAPI-served build: **5 passed, 1 intentionally skipped** (desktop keyboard-only test excluded on mobile). Desktop 1440 px and iPhone-size emulation: homepage, orbit, journey, result and calculations inspected; no horizontal overflow; no page exceptions in the workspace test.
 - Screenshots are local in `tmp/screenshots/`, deliberately ignored. Visual review showed readable layouts on desktop and mobile. No generated images/build/dependency files are staged.
 - Dependency setup initially required explicit approval of the esbuild install script and running the bundler outside Windows child-process sandbox restrictions. `pnpm-workspace.yaml` records only esbuild as allowed. No global sandbox or Git safety setting changed.
+
+## P4 — integrated flows and launcher
+- Added a Windows start/setup/build launcher, portable local run instructions and a narrowly verified background-process stop helper. Local URL: `http://127.0.0.1:8000`; never bound to a public interface.
+- Integration review caught and fixed a stale what-if response that could otherwise return the user to results after editing, a meaningless transit action for a one-stage imported scenario, and a misleading missing-temperature message when pack geometry was actually absent.
+- Added deeply nested JSON handling. The new test initially expected only HTTP 400; actual parsing legitimately produced a schema-level 422. The test now accepts either documented rejection path while disallowing an internal server error.
+- Verification: backend **42 passed**; browser suite **29 passed, 1 intentionally skipped** across desktop and mobile. Cases cover all three flows, changed journey budgets, exhausted oxygen, manual unknowns, reviewed Hindi extraction, valid/invalid imports, deterministic JSON round trip, save/reload/delete, printable report, service failure/retry and stale-response protection.
+- Successfully executed `scripts/start.ps1 -Build`; it built the app and detected the existing local service without starting a duplicate. Rendered report inspected in print media; downloaded files and screenshots retained only in ignored `tmp/`.
+- Runtime note: test runner emits a dependency deprecation notice recommending httpx2. It does not affect the 42 passing API/engine tests; it is tracked for dependency maintenance rather than suppressed.

@@ -40,7 +40,7 @@ async def read_scenario(request: Request) -> Scenario:
         chunks.append(chunk)
     try:
         payload = json.loads(b''.join(chunks))
-    except (ValueError, UnicodeDecodeError):
+    except (ValueError, UnicodeDecodeError, RecursionError):
         raise HTTPException(400, 'The request is not valid JSON.')
     try:
         return Scenario.model_validate(payload)
