@@ -20,3 +20,9 @@ Primary-source recheck supplies broccoli values at 0/5/10/15/20 °C. Use those e
 
 ## D007 — Rank families without invented objective data
 No trustworthy cost quotes, complete film transfer curves or local recycling inventory are available. The MVP orders appropriate material families by declared preference and exposes their tradeoffs. It does not claim constrained numerical optimization or a validated supplier match. Future supplier ingestion can replace this limited ordering; document this limit in P5 and the future PDF.
+
+## D008 — Input assistance without unprovided credentials
+No LLM/vision credentials were provided. The complete workflow uses an ordinary form, JSON import, optional browser speech and a transparent limited phrase parser. Photo capture uses human commodity confirmation. This preserves a working farmer-facing path without pretending a trained vision model exists. Browser speech may use the browser vendor's online service, disclosed before activation. No audio or image is saved by Packora.
+
+## D009 — Integration verification through the real local build
+Build React into `frontend/dist` and serve it with FastAPI on 127.0.0.1:8000. Browser tests use the installed headless Edge channel on this machine; generic instructions will support Playwright Chromium on other machines. Generated screenshots/traces stay outside Git. A production deployment is still explicitly unauthorized.
