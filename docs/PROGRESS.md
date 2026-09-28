@@ -1,7 +1,7 @@
 # Phase progress and evidence
 
 ## Current state
-P0 pushed (`a985c4a`). P1 engine complete and verified; P2 next. No food-packaging trials or deployment.
+P0 pushed (`a985c4a`); P1 pushed (`1db7774`). P2 API complete; P3 interface next. No food-packaging trials or deployment.
 
 ## P0 — repository foundation
 - Inspected workspace: only local `output/` and `tmp/` design artifacts; no existing Git repository or application to overwrite.
@@ -18,3 +18,9 @@ P0 pushed (`a985c4a`). P1 engine complete and verified; P2 next. No food-packagi
 - Verification: `.venv/Scripts/python.exe -m pytest -q` → **26 passed**. Numerical oracles, temperature/geometry changes, cut-product mismatch, unknowns, exhausted oxygen, strict input types and fingerprints passed.
 - Current backend dependency releases installed in the isolated ignored environment; direct requirements and exact transitive lock captured. No dependencies or research exports included in Git.
 - Scientific scope/assumptions documented in `SCIENCE.md`. No film grade is falsely qualified and no shelf-life date is predicted.
+
+## P2 — API and reports
+- Added local typed input validation, health/catalogue/examples/schema endpoints, reproducible evaluation and escaped standalone HTML reports.
+- Added bounded body reading, non-echoing validation errors, loopback host restrictions, security headers, unknown-route and static path checks.
+- Verification: full engine/API suite **41 tests** (final command recorded with phase commit). Tests include streaming request limits, injection escaping, numerical output, export/re-evaluation identity and built-frontend serving using a temporary fixture. Actual production frontend integration is checked in P4.
+- No external model or network is required to evaluate a scenario. Reports preserve source and assumption context; they do not claim lab validation.
